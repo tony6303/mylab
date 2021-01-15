@@ -1,0 +1,53 @@
+package com.cos.start.web;
+
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cos.start.domain.UserRepository;
+
+
+@RestController
+public class UserController {
+	
+	private UserRepository userRepository;
+	
+	public UserController(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
+	//http://localhost:8080/user
+	@GetMapping("/user")
+	public void findAll() {
+		System.out.println("findAll()");
+		return userRepository.findAll();
+	}
+	
+	@GetMapping("/user/{id}")
+	public void findById(@PathVariable int id) {
+		System.out.println("findById()");
+	}
+	
+	@PostMapping("/user")
+	//x-www-form-urlencoded => request.getParameter
+	public void save(String username, String password, String phone) {
+		System.out.println("save()");
+	}
+	
+	@DeleteMapping("/user/{id}")
+	public void delete(@PathVariable int id) {
+		System.out.println("delete()");
+	}
+	
+	@PutMapping("/user/{id}")
+	public void update(@PathVariable int id, String password, String phone) {
+		System.out.println("update()");
+	}
+}

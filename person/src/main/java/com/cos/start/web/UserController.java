@@ -1,0 +1,99 @@
+package com.cos.start.web;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cos.start.domain.CommonDto;
+import com.cos.start.domain.JoinReqDto;
+import com.cos.start.domain.UpdateReqDto;
+import com.cos.start.domain.User;
+import com.cos.start.domain.UserRepository;
+
+
+@RestController
+public class UserController {
+	
+	private UserRepository userRepository;
+	
+	public UserController(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
+	//http://localhost:8080/user
+	@GetMapping("/user")
+	public List<User> findAll() {
+		System.out.println("findAll()");
+		return userRepository.findAll();
+	}
+	
+	@GetMapping("/user/{id}")
+	public CommonDto<User> findById(@PathVariable int id) {
+		System.out.println("findById()");
+		return new CommonDto<>(HttpStatus.OK.value(),userRepository.findById(id));
+	}
+	
+//	@PostMapping("/user")
+//	//x-www-form-urlencoded => request.getParameter()
+//	public void save(String username, String password, String phone) {
+//		System.out.println("save()");
+//		System.out.println("username :" + username);
+//		System.out.println("password :" + password);
+//		System.out.println("phone :" + phone);
+//	} 
+	
+//	@PostMapping("/user") // text/plain : Buffer 로 바로 읽음
+//	public void save(@RequestBody String data) {
+//		System.out.println("save()");
+//		System.out.println("data :" + data);
+//	}
+	
+	@CrossOrigin // CORS 정책 무시
+	@PostMapping("/user") // applicaion/json + 오브젝트로 받기
+	public CommonDto<String> save(@RequestBody JoinReqDto dto,@Valid BindingResult bindingResult ) { // "ok" 반환하기때문에 String
+		
+		if(bindingResult.hasErrors()) {
+			Map<String,String> errorMap = new HashMap<>();
+			
+			//AOP3강 12분00초
+			for (FieldError error : bindingResult.getFieldErrors()) {
+				errorMap.put(error.getField(), error.getDefaultMessage());
+			}
+		}
+		
+		System.out.println("save()");
+		System.out.println("user :" + dto);
+		userRepository.save(dto);
+		
+		return new CommonDto<>(HttpStatus.CREATED.value(),"ok");
+	}
+	
+	@DeleteMapping("/user/{id}")
+	public CommonDto delete(@PathVariable int id) {
+		System.out.println("delete()");
+		userRepository.delete(id);
+		return new CommonDto<>(HttpStatus.OK.value());
+		
+	}
+	
+	@PutMapping("/user/{id}")
+	public CommonDto update(@PathVariable int id,@RequestBody UpdateReqDto dto) {
+		System.out.println("update()");
+		userRepository.update(id, dto); 
+		return new CommonDto<>(HttpStatus.OK.value()); 
+	}
+}

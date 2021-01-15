@@ -1,0 +1,5 @@
+package com.cos.start.config;
+
+public class MyExceptionHandler {
+
+}

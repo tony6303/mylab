@@ -1,0 +1,8 @@
+package com.cos.start.domain;
+
+public class UserRepository { //DAO 같은 역할??
+	
+	public List<User> findAll(){
+		
+	}
+}
