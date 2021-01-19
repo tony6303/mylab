@@ -27,4 +27,12 @@
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.CrossOrigin"/>
+    <fullyQualifiedTypeName name="org.springframework.validation.annotation.Validated"/>
+    <fullyQualifiedTypeName name="javax.validation.Valid"/>
+    <fullyQualifiedTypeName name="org.springframework.lang.NonNull"/>
+    <fullyQualifiedTypeName name="javax.validation.constraints.NotBlank"/>
+    <fullyQualifiedTypeName name="javax.validation.constraints.Size"/>
+    <fullyQualifiedTypeName name="javax.validation.constraints.NotNull"/>
+    <fullyQualifiedTypeName name="org.springframework.validation.FieldError"/>
+    <fullyQualifiedTypeName name="org.springframework.validation.BindingResult"/>
 </qualifiedTypeNameHistroy>
